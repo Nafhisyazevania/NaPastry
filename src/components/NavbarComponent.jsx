@@ -1,15 +1,36 @@
 import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logowhite.png";
 import { navLinks } from "../data/index";
+import { FaAngleLeft } from "react-icons/fa6";
 
 const NavbarComponent = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // Fungsi navigasi ke halaman sebelumnya
+    const handleIconClick = () => {
+        navigate(-1); // Navigasi ke halaman sebelumnya
+    };
+
+    // Cek lokasi halaman
+    const isHomePage = location.pathname === "/";
+    const isDetailPage = location.pathname.startsWith("/product/");
+
     return (
         <div>
             <Navbar expand="lg" fixed="top" className="custom-bg">
                 <Container>
-                    <Navbar.Brand href="/">
+                    {/* Tampilkan ikon Back hanya di halaman detail */}
+                    {isDetailPage && (
+                        <FaAngleLeft
+                            size="1.7em"
+                            style={{ color: "white", marginRight: "10px", cursor: "pointer", transition: "transform 0.2s" }}
+                            onClick={handleIconClick}
+                        />
+                    )}
+                    <Navbar.Brand href="#">
                         <img
                             src={logo}
                             width="30"
@@ -30,12 +51,14 @@ const NavbarComponent = () => {
                                 </div>
                             ))}
                         </Nav>
-                        {/* Login Button */}
-                        <div>
-                            <Link to="/signup" className="btn login-btn ms-3">
-                                Sign Up
-                            </Link>
-                        </div>
+                        {/* Tampilkan tombol Sign Up hanya di homepage */}
+                        {isHomePage && (
+                            <div>
+                                <Link to="/signup" className="btn login-btn ms-3">
+                                    Sign Up
+                                </Link>
+                            </div>
+                        )}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

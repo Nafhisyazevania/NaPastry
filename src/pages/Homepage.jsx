@@ -8,6 +8,12 @@ import Cromboloni from "../assets/Cromboloni.jpg";
 import Sourdough from "../assets/Sourdough.jpg";
 import ComingSoon from "../assets/Cominsoon.png";
 import CroissantBanner from "../assets/Croissantbanner.jpg";
+import Product1 from "../assets/Croissant.jpg";
+import Product2 from "../assets/Sourdough.jpg";
+import Product3 from "../assets/Croissant.jpg";
+import Product4 from "../assets/Cromboloni.jpg";
+import Product5 from "../assets/Sourdough.jpg";
+import Product6 from "../assets/Cromboloni.jpg";
 
 const Homepage = () => {
     // Referensi untuk elemen target
@@ -22,6 +28,13 @@ const Homepage = () => {
         { id: 1, name: "Croissant", image: Croissant },
         { id: 2, name: "Cromboloni", image: Cromboloni },
         { id: 3, name: "Sourdough", image: Sourdough },
+        { id: 4, name: "Product 1", image: Product1 },
+        { id: 5, name: "Product 2", image: Product2 },
+        { id: 6, name: "Product 3", image: Product3 },
+        { id: 7, name: "Product 4", image: Product4 },
+        { id: 8, name: "Product 5", image: Product5 },
+        { id: 9, name: "Product 6", image: Product6 },
+        { id: 10, name: "Product 7", image: Product1 },
     ];
 
     return (
@@ -46,20 +59,73 @@ const Homepage = () => {
                 <div className="bg-brown py-5">
                     <h2 className="text-white text-center mb-5">Menu NAPastry</h2>
                     <div className="container">
-                        <div className="row g-4">
-                            {products.map((product) => (
-                                <div className="col-md-4 d-flex justify-content-center" key={product.id}>
-                                    <div className="card text-center shadow border-0">
-                                        <img src={product.image} className="card-img-top rounded" alt={product.name} />
-                                        <div className="card-body">
-                                            <h5 className="card-title">{product.name}</h5>
-                                            <Link to={`/product/${product.id}`} className="btn login-btn mt-3">
-                                                Show more
-                                            </Link>
+                        <div id="productCarousel" className="carousel slide" data-bs-ride="carousel">
+                            <div className="carousel-inner">
+                                {/* Divide products into groups of 3 */}
+                                {products.reduce((acc, product, index) => {
+                                    const groupIndex = Math.floor(index / 3);
+                                    if (!acc[groupIndex]) {
+                                        acc[groupIndex] = [];
+                                    }
+                                    acc[groupIndex].push(product);
+                                    return acc;
+                                }, []).map((group, index) => (
+                                    <div
+                                        className={`carousel-item ${index === 0 ? "active" : ""}`}
+                                        key={index}
+                                    >
+                                        <div className="d-flex justify-content-center">
+                                            {group.map((product) => (
+                                                <div
+                                                    className="card text-center shadow border-0 mx-3"
+                                                    style={{ width: "18rem" }}
+                                                    key={product.id}
+                                                >
+                                                    <img
+                                                        src={product.image}
+                                                        className="card-img-top rounded"
+                                                        alt={product.name}
+                                                    />
+                                                    <div className="card-body">
+                                                        <h5 className="card-title">{product.name}</h5>
+                                                        <Link
+                                                            to={`/product/${product.id}`}
+                                                            className="btn login-btn mt-3"
+                                                        >
+                                                            Show more
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
+                            {/* Carousel Controls */}
+                            <button
+                                className="carousel-control-prev"
+                                type="button"
+                                data-bs-target="#productCarousel"
+                                data-bs-slide="prev"
+                            >
+                                <span
+                                    className="carousel-control-prev-icon"
+                                    aria-hidden="true"
+                                ></span>
+                                <span className="visually-hidden">Previous</span>
+                            </button>
+                            <button
+                                className="carousel-control-next"
+                                type="button"
+                                data-bs-target="#productCarousel"
+                                data-bs-slide="next"
+                            >
+                                <span
+                                    className="carousel-control-next-icon"
+                                    aria-hidden="true"
+                                ></span>
+                                <span className="visually-hidden">Next</span>
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -14,7 +14,6 @@ function App() {
   return (
     <div>
       <NavbarComponent />
-
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<Detail />} />
